@@ -1,0 +1,130 @@
+* {
+  box-sizing: border-box;
+  background-color: #f5a819;
+  /* background-color: black; */
+}
+body {
+  font-family: "Roboto Mono", monospace;
+}
+h1 {
+  display: flex;
+  justify-content: center;
+  font-weight: 900;
+}
+#container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  width: 50%;
+  border: 5px solid black;
+  padding: 10px;
+}
+.calcBtn {
+  background-color: #a5f881;
+  font-size: 2rem;
+  border: 3px solid black;
+  margin: 2px;
+}
+
+#input {
+  max-width: 85%;
+  height: 150px;
+  font-size: 3rem;
+  border: 2px solid black;
+  margin-bottom: 10px;
+  background-color: #a5f881;
+  flex-basis: 100%;
+}
+
+#btnAdd {
+  min-height: 200px;
+}
+#btn0 {
+  min-width: 200px;
+}
+
+#btnEqual {
+  min-height: 200px;
+}
+#keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "Clear Divide Multiply Subtract"
+    "seven eight nine Add"
+    "four five six Add"
+    "one two three equal"
+    "zero zero decimal equal";
+}
+
+#btnClear {
+  grid-area: Clear;
+}
+
+#btnDivide {
+  grid-area: Divide;
+}
+
+#btnMultiply {
+  grid-area: Multiply;
+}
+
+#btnSubtract {
+  grid-area: Subtract;
+}
+
+#btn7 {
+  grid-area: seven;
+}
+
+#btn8 {
+  grid-area: eight;
+}
+
+#btn9 {
+  grid-area: nine;
+}
+
+#btnAdd {
+  grid-area: Add;
+}
+
+#btn4 {
+  grid-area: four;
+}
+
+#btn5 {
+  grid-area: five;
+}
+
+#btn6 {
+  grid-area: six;
+}
+
+#btn1 {
+  grid-area: one;
+}
+
+#btn2 {
+  grid-area: two;
+}
+
+#btn3 {
+  grid-area: three;
+}
+
+#btnEqual {
+  grid-area: equal;
+}
+
+#btn0 {
+  grid-area: zero;
+}
+
+#btnDecimal {
+  grid-area: decimal;
+}
