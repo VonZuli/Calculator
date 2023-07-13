@@ -29,10 +29,22 @@ h1 {
   transition: all 0.1s ease;
 }
 
-#input {
+#displayInput {
   max-width: 400px;
-  height: 150px;
+  height: 75px;
   font-size: 3rem;
+  font-family: "VT323", monospace;
+  border: 2px solid black;
+  border-bottom: none;
+  background-color: #a5f881;
+  flex-basis: 100%;
+  min-width: 400px;
+}
+#displayOutput {
+  max-width: 400px;
+  height: 75px;
+  font-size: 3rem;
+  font-family: "VT323", monospace;
   border: 2px solid black;
   margin-bottom: 10px;
   background-color: #a5f881;
