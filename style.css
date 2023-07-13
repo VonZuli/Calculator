@@ -16,25 +16,28 @@ h1 {
   justify-content: center;
   flex-wrap: wrap;
   margin: 0 auto;
-  width: 50%;
+  min-width: 500px;
   border: 5px solid black;
   padding: 10px;
+  max-width: 500px;
 }
 .calcBtn {
   background-color: #a5f881;
   font-size: 2rem;
   border: 3px solid black;
   margin: 2px;
+  transition: all 0.1s ease;
 }
 
 #input {
-  max-width: 85%;
+  max-width: 400px;
   height: 150px;
   font-size: 3rem;
   border: 2px solid black;
   margin-bottom: 10px;
   background-color: #a5f881;
   flex-basis: 100%;
+  min-width: 400px;
 }
 
 #btnAdd {
@@ -54,15 +57,22 @@ h1 {
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
-    "Clear Divide Multiply Subtract"
+    "Delete Divide Multiply Subtract"
     "seven eight nine Add"
     "four five six Add"
     "one two three equal"
     "zero zero decimal equal";
+  user-select: none;
+}
+.selected {
+  transform: scale(0.9);
+  border-color: #97540f;
+  box-shadow: 0 0 1rem #97540f;
 }
 
-#btnClear {
-  grid-area: Clear;
+#btnDelete {
+  grid-area: Delete;
+  font-size: 1.7rem;
 }
 
 #btnDivide {
