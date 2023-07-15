@@ -1,80 +1,105 @@
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   background-color: #f5a819;
   /* background-color: black; */
-}
-body {
   font-family: "Roboto Mono", monospace;
 }
-h1 {
-  display: flex;
-  justify-content: center;
-  font-weight: 900;
+body {
+  padding: 0;
+  margin: 0;
 }
+
 #container {
-  display: flex;
+  display: grid;
   justify-content: center;
-  flex-wrap: wrap;
+  align-content: center;
   margin: 0 auto;
-  min-width: 500px;
-  border: 5px solid black;
-  padding: 10px;
+  /* min-width: 500px; */
   max-width: 500px;
+  min-height: 10vh;
+  border: 5px solid black;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(100px, auto) 2fr;
+  grid-template-areas:
+    "display"
+    "keypad";
+  gap: 0px 0px;
+  padding: 10px;
+  background-color: #97540f;
+  margin-top: 10px;
 }
 .calcBtn {
+  cursor: pointer;
   background-color: #a5f881;
-  font-size: 2rem;
+  font-size: 4rem;
   border: 3px solid black;
   margin: 2px;
   transition: all 0.1s ease;
+  outline: none;
+}
+.calcBtn:hover {
+  background-color: #27eccb;
 }
 
-#displayInput {
-  max-width: 400px;
-  height: 75px;
-  font-size: 3rem;
-  font-family: "VT323", monospace;
-  border: 2px solid black;
-  border-bottom: none;
+#display {
+  grid-column: 1/-1;
   background-color: #a5f881;
-  flex-basis: 100%;
-  min-width: 400px;
+  border: 5px solid black;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  word-wrap: break-word;
+  word-break: break-all;
 }
-#displayOutput {
-  max-width: 400px;
-  height: 75px;
+.previousOperand {
+  padding-left: 5px;
   font-size: 3rem;
   font-family: "VT323", monospace;
-  border: 2px solid black;
+  margin-top: 10px;
+  background-color: #a5f881;
+  min-height: 48px;
+}
+.currentOperand {
+  padding-left: 5px;
+  font-size: 4rem;
+  font-family: "VT323", monospace;
   margin-bottom: 10px;
   background-color: #a5f881;
-  flex-basis: 100%;
-  min-width: 400px;
+  min-height: 64px;
 }
 
-#btnAdd {
+/* #btnAdd {
   min-height: 200px;
-}
-#btn0 {
-  min-width: 200px;
-}
+} */
+/* #btn0 {
+  min-width: 205px;
+} */
 
-#btnEqual {
+/* #btnEqual {
   min-height: 200px;
-}
+} */
 #keypad {
+  margin: 0 auto;
+  grid-area: keypad;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: repeat(5, 100px);
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
-    "Delete Divide Multiply Subtract"
+    "Clear Divide Multiply Subtract"
     "seven eight nine Add"
     "four five six Add"
-    "one two three equal"
-    "zero zero decimal equal";
+    "one two three Equal"
+    "Delete zero decimal Equal";
   user-select: none;
+  padding: 5px;
+  border: 5px solid black;
 }
 .selected {
   transform: scale(0.9);
@@ -84,7 +109,7 @@ h1 {
 
 #btnDelete {
   grid-area: Delete;
-  font-size: 1.7rem;
+  font-size: 3rem;
 }
 
 #btnDivide {
@@ -140,7 +165,7 @@ h1 {
 }
 
 #btnEqual {
-  grid-area: equal;
+  grid-area: Equal;
 }
 
 #btn0 {
@@ -149,4 +174,8 @@ h1 {
 
 #btnDecimal {
   grid-area: decimal;
+}
+
+#btnClear {
+  grid-area: Clear;
 }

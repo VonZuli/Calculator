@@ -9,62 +9,61 @@
 //add accessibility sound feedback
 
 const container = document.getElementById("container");
-const displayInput = document.createElement("textarea");
-const displayOutput = document.createElement("textarea");
+const display = document.createElement("div");
+const previousOperand = document.createElement("div");
+const currentOperand = document.createElement("div");
 const keypad = document.createElement("div");
 
-displayInput.id = "displayInput";
-displayInput.style.resize = "none";
-displayInput.textContent = "0";
-displayOutput.id = "displayOutput";
-displayOutput.style.resize = "none";
+display.id = "display";
+currentOperand.id = "currentOperand";
+currentOperand.setAttribute("class", "currentOperand");
+currentOperand.setAttribute("data-prev-operand", "currentOperand");
+// currentOperand.textContent = "0";
+previousOperand.id = "previousOperand";
+previousOperand.setAttribute("class", "previousOperand");
+previousOperand.setAttribute("data-current-operand", "previousOperand");
 keypad.id = "keypad";
-container.appendChild(displayInput);
-container.appendChild(displayOutput);
+container.appendChild(display);
+display.appendChild(previousOperand);
+display.appendChild(currentOperand);
 container.appendChild(keypad);
 
-for (let i = 0; i < 17; i++) {
+for (let i = 0; i < 18; i++) {
   const btn = document.createElement("button");
   btn.className = "calcBtn";
-  btn.style.height = "100px";
-  btn.style.width = "100px";
+  // btn.style.height = "100px";
+  // btn.style.width = "100px";
   btn.textContent = i;
   switch (btn.textContent) {
     case "0":
-      btn.textContent = "Delete";
-      btn.id = `btnDelete`;
+      btn.textContent = "AC";
+      btn.id = `btnClear`;
+      btn.classList.add("clear");
       btn.setAttribute("data-key", `Delete`);
-      btn.classList.add("delete");
-      window.addEventListener("keyup", clear);
-      window.removeEventListener("keydown", getKeypress);
       break;
     case "1":
       btn.textContent = "/";
       btn.id = `btnDivide`;
       btn.classList.add("operator");
       btn.setAttribute("data-key", `NumpadDivide`);
-      // window.addEventListener("keydown", divide);
       break;
     case "2":
       btn.textContent = "*";
       btn.id = `btnMultiply`;
       btn.classList.add("operator");
       btn.setAttribute("data-key", `NumpadMultiply`);
-      // window.addEventListener("keydown", multiply);
       break;
     case "3":
       btn.textContent = "-";
       btn.id = `btnSubtract`;
       btn.classList.add("operator");
       btn.setAttribute("data-key", `NumpadSubtract`);
-      // window.addEventListener("keydown", subtract);
       break;
     case "4":
       btn.textContent = "7";
       btn.id = `btn${btn.textContent}`;
       btn.classList.add("number");
       btn.setAttribute("data-key", `Numpad${btn.textContent}`);
-      btn.value = 7;
       break;
     case "5":
       btn.textContent = "8";
@@ -81,9 +80,8 @@ for (let i = 0; i < 17; i++) {
     case "7":
       btn.textContent = "+";
       btn.id = `btnAdd`;
-      btn.setAttribute("data-key", `NumpadAdd`);
       btn.classList.add("operator");
-      // window.addEventListener("keydown", add);
+      btn.setAttribute("data-key", `NumpadAdd`);
       break;
     case "8":
       btn.textContent = "4";
@@ -106,9 +104,8 @@ for (let i = 0; i < 17; i++) {
     case "11":
       btn.textContent = "=";
       btn.id = `btnEqual`;
-      btn.setAttribute("data-key", `NumpadEnter`);
       btn.classList.add("operator");
-      // window.addEventListener("keydown", equal);
+      btn.setAttribute("data-key", `NumpadEnter`);
       break;
     case "12":
       btn.textContent = "1";
@@ -140,7 +137,13 @@ for (let i = 0; i < 17; i++) {
       btn.classList.add("number");
       btn.setAttribute("data-key", `NumpadDecimal`);
       break;
-
+    case "17":
+      btn.textContent = "⇦";
+      btn.id = `btnDelete`;
+      btn.classList.add("delete");
+      btn.setAttribute("data-key", `Backspace`);
+      window.addEventListener("keyup", clear);
+      break;
     default:
       break;
   }
@@ -152,89 +155,63 @@ for (let i = 0; i < 17; i++) {
 function clear(e) {
   const key = document.querySelector(`.calcBtn[data-key="${e.code}"]`);
   if (!key) return;
-  if (e.key === "Delete") {
-    displayOutput.textContent = `${e.key}`;
+  if (e.key === "Delete" || e.key === "Backspace") {
+    previousOperand.textContent = `${e.key}`;
     setTimeout(() => {
-      displayOutput.textContent = "";
+      previousOperand.textContent = "";
     }, 1500);
   } else {
     return;
   }
 }
-function divide(array) {
-  console.log(array, typeof array[0]);
-}
-function multiply(array) {
-  console.log(array, typeof array[0]);
-}
-function subtract(array) {
-  console.log(array, typeof array[0]);
-}
-function add(array) {
-  let sum = 0;
-  for (let i = 0; i < array.length; i++) {
-    console.log(array, typeof array[i]);
-    sum += array[i];
-    displayInput.textContent = sum;
-    console.log(sum, typeof sum);
-  }
-  return sum;
-}
-function calculate(e) {
-  console.log(e.textContent);
-}
-
-let array = [];
+function divide() {}
+function multiply() {}
+function subtract() {}
+function add() {}
+function calculate() {}
+function backspace() {}
 
 function getKeypress(e) {
   const key = document.querySelector(`.calcBtn[data-key="${e.code}"]`);
-  let a;
+  // let a;
   if (!key) return;
   if (e.key === `Delete`) {
-    displayInput.textContent = "0";
-  } else if (displayInput.textContent === "0") {
-    displayInput.textContent = `${e.key}`;
+    currentOperand.textContent = "";
+  } else if (currentOperand.textContent === "" && e.key === Number) {
+    currentOperand.textContent = `${e.key}`;
   } else if (isNaN(e.key)) {
     switch (e.key) {
       case ".":
         break;
       case "/":
-        displayOutput.textContent = `${e.code.slice(6)}`;
-        a = displayInput.textContent;
-        array.push(+a);
-        displayInput.textContent = "0";
-        divide(array);
+        previousOperand.textContent = `${e.code.slice(6)}`;
+        divide();
         break;
       case "*":
-        displayOutput.textContent = `${e.code.slice(6)}`;
-        a = displayInput.textContent;
-        array.push(+a);
-        displayInput.textContent = "0";
-        multiply(array);
+        previousOperand.textContent = `${e.code.slice(6)}`;
+        multiply();
         break;
       case "-":
-        displayOutput.textContent = `${e.code.slice(6)}`;
-        a = displayInput.textContent;
-        array.push(+a);
-        displayInput.textContent = "0";
-        subtract(array);
+        previousOperand.textContent = `${e.code.slice(6)}`;
+        subtract();
         break;
       case "+":
-        displayOutput.textContent = `${e.code.slice(6)}`;
-        a = displayInput.textContent;
-        array.push(+a);
-        displayInput.textContent = add(array);
+        previousOperand.textContent = `${e.code.slice(6)}`;
         break;
       case "Enter":
-        displayOutput.textContent = `${e.code.slice(6)}`;
+        previousOperand.textContent = `${e.code.slice(6)}`;
         calculate();
+        break;
+      case "Backspace":
+        previousOperand.textContent = `${e.code}`;
+        backspace();
         break;
       default:
         break;
     }
   } else {
-    let num = displayInput.textContent;
-    displayInput.textContent = num.concat(e.key);
+    let num = currentOperand.textContent;
+    currentOperand.textContent = num.concat(e.key);
   }
   key.classList.add("selected");
   return `${e.key}`;
@@ -244,54 +221,54 @@ function getClick() {
   const key = this.dataset.key;
   let a;
   if (this.id === "btnDelete") {
-    displayInput.textContent = "0";
-    displayOutput.textContent = `${this.textContent}`;
+    currentOperand.textContent = "0";
+    previousOperand.textContent = `${this.textContent}`;
     setTimeout(() => {
-      displayOutput.textContent = "";
+      previousOperand.textContent = "";
     }, 1500);
-  } else if (displayInput.textContent === "0") {
-    displayInput.textContent = `${this.textContent}`;
+  } else if (currentOperand.textContent === "0") {
+    currentOperand.textContent = `${this.textContent}`;
   } else if (isNaN(this.textContent)) {
     switch (this.textContent) {
       case ".":
         break;
       case "/":
-        displayOutput.textContent = `${key.slice(6)}`;
-        a = displayInput.textContent;
-        array.push(+a);
-        displayInput.textContent = "0";
-        divide(array);
+        previousOperand.textContent = `${key.slice(6)}`;
+        a = currentOperand.textContent;
+
+        currentOperand.textContent = "0";
+        divide();
         break;
       case "*":
-        displayOutput.textContent = `${key.slice(6)}`;
-        a = displayInput.textContent;
-        array.push(+a);
-        displayInput.textContent = "0";
-        multiply(array);
+        previousOperand.textContent = `${key.slice(6)}`;
+        a = currentOperand.textContent;
+
+        currentOperand.textContent = "0";
+        multiply();
         break;
       case "-":
-        displayOutput.textContent = `${key.slice(6)}`;
-        a = displayInput.textContent;
-        array.push(+a);
-        displayInput.textContent = "0";
-        subtract(array);
+        previousOperand.textContent = `${key.slice(6)}`;
+        a = currentOperand.textContent;
+
+        currentOperand.textContent = "0";
+        subtract();
         break;
       case "+":
-        displayOutput.textContent = `${key.slice(6)}`;
-        a = displayInput.textContent;
-        array.push(+a);
-        displayInput.textContent = add(array);
+        previousOperand.textContent = `${key.slice(6)}`;
+        a = currentOperand.textContent;
+
+        currentOperand.textContent = add();
         break;
       case "Enter":
-        displayOutput.textContent = `${key.slice(6)}`;
+        previousOperand.textContent = `${key.slice(6)}`;
         calculate();
         break;
       default:
         break;
     }
   } else {
-    let num = displayInput.textContent;
-    displayInput.textContent = num.concat(this.textContent);
+    let num = currentOperand.textContent;
+    currentOperand.textContent = num.concat(this.textContent);
   }
   this.classList.add("selected");
 }
