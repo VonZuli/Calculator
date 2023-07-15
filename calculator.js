@@ -15,6 +15,7 @@ const keypad = document.createElement("div");
 
 displayInput.id = "displayInput";
 displayInput.style.resize = "none";
+displayInput.textContent = "0";
 displayOutput.id = "displayOutput";
 displayOutput.style.resize = "none";
 keypad.id = "keypad";
@@ -40,16 +41,19 @@ for (let i = 0; i < 17; i++) {
       btn.textContent = "/";
       btn.id = `btnDivide`;
       btn.setAttribute("data-key", `NumpadDivide`);
+      // window.addEventListener("keydown", divide);
       break;
     case "2":
       btn.textContent = "*";
       btn.id = `btnMultiply`;
       btn.setAttribute("data-key", `NumpadMultiply`);
+      // window.addEventListener("keydown", multiply);
       break;
     case "3":
       btn.textContent = "-";
       btn.id = `btnSubtract`;
       btn.setAttribute("data-key", `NumpadSubtract`);
+      // window.addEventListener("keydown", subtract);
       break;
     case "4":
       btn.textContent = "7";
@@ -71,6 +75,7 @@ for (let i = 0; i < 17; i++) {
       btn.textContent = "+";
       btn.id = `btnAdd`;
       btn.setAttribute("data-key", `NumpadAdd`);
+      // window.addEventListener("keydown", add);
       break;
     case "8":
       btn.textContent = "4";
@@ -91,6 +96,7 @@ for (let i = 0; i < 17; i++) {
       btn.textContent = "=";
       btn.id = `btnEqual`;
       btn.setAttribute("data-key", `NumpadEnter`);
+      // window.addEventListener("keydown", equal);
       break;
     case "12":
       btn.textContent = "1";
@@ -138,48 +144,134 @@ function clear(e) {
     return;
   }
 }
-function divide() {
-  console.log(this.textContent);
+function divide(array) {
+  console.log(array, typeof array[0]);
 }
-function multiply() {
-  console.log(this.textContent);
+function multiply(array) {
+  console.log(array, typeof array[0]);
 }
-function subtract() {
-  console.log(this.textContent);
+function subtract(array) {
+  console.log(array, typeof array[0]);
 }
-function add() {
-  console.log(this.textContent);
+function add(array) {
+  console.log(array, typeof array[0]);
 }
-function equal() {
-  console.log(this.textContent);
+function calculate(e) {
+  console.log(e.textContent);
 }
-function seven() {
-  console.log(this.value, typeof this.value);
-}
+
 let array = [];
 
 function getKeypress(e) {
   const key = document.querySelector(`.calcBtn[data-key="${e.code}"]`);
-  // const secondaryKey = document.querySelector(
-  //   `.calcBtn[data-secondary="${e.code}"]`
-  // );
-  // const deleteKey = document.querySelector(`.calcBtn[data-key="Delete"]`);
+  let a;
   if (!key) return;
   if (e.key === `Delete`) {
-    displayInput.textContent = "";
-  } else {
-    array.push(+e.key);
-    console.log(array);
+    displayInput.textContent = "0";
+  } else if (displayInput.textContent === "0") {
     displayInput.textContent = `${e.key}`;
+  } else if (isNaN(e.key)) {
+    switch (e.key) {
+      case ".":
+        break;
+      case "/":
+        displayOutput.textContent = `${e.code.slice(6)}`;
+        a = displayInput.textContent;
+        array.push(+a);
+        displayInput.textContent = "0";
+        divide(array);
+        break;
+      case "*":
+        displayOutput.textContent = `${e.code.slice(6)}`;
+        a = displayInput.textContent;
+        array.push(+a);
+        displayInput.textContent = "0";
+        multiply(array);
+        break;
+      case "-":
+        displayOutput.textContent = `${e.code.slice(6)}`;
+        a = displayInput.textContent;
+        array.push(+a);
+        displayInput.textContent = "0";
+        subtract(array);
+        break;
+      case "+":
+        displayOutput.textContent = `${e.code.slice(6)}`;
+        a = displayInput.textContent;
+        array.push(+a);
+        displayInput.textContent = "0";
+        add(array);
+        break;
+      case "Enter":
+        displayOutput.textContent = `${e.code.slice(6)}`;
+        calculate();
+        break;
+      default:
+        break;
+    }
+  } else {
+    let num = displayInput.textContent;
+    displayInput.textContent = num.concat(e.key);
   }
   key.classList.add("selected");
   return `${e.key}`;
 }
-function getClick(e) {
-  // const key = document.querySelector(`.calcBtn`);
+
+function getClick() {
+  const key = this.dataset.key;
+  let a;
+  if (this.id === "btnDelete") {
+    displayInput.textContent = "0";
+    displayOutput.textContent = `${this.textContent}`;
+    setTimeout(() => {
+      displayOutput.textContent = "";
+    }, 1500);
+  } else if (displayInput.textContent === "0") {
+    displayInput.textContent = `${this.textContent}`;
+  } else if (isNaN(this.textContent)) {
+    switch (this.textContent) {
+      case ".":
+        break;
+      case "/":
+        displayOutput.textContent = `${key.slice(6)}`;
+        a = displayInput.textContent;
+        array.push(+a);
+        displayInput.textContent = "0";
+        divide(array);
+        break;
+      case "*":
+        displayOutput.textContent = `${key.slice(6)}`;
+        a = displayInput.textContent;
+        array.push(+a);
+        displayInput.textContent = "0";
+        multiply(array);
+        break;
+      case "-":
+        displayOutput.textContent = `${key.slice(6)}`;
+        a = displayInput.textContent;
+        array.push(+a);
+        displayInput.textContent = "0";
+        subtract(array);
+        break;
+      case "+":
+        displayOutput.textContent = `${key.slice(6)}`;
+        a = displayInput.textContent;
+        array.push(+a);
+        displayInput.textContent = "0";
+        add(array);
+        break;
+      case "Enter":
+        displayOutput.textContent = `${key.slice(6)}`;
+        calculate();
+        break;
+      default:
+        break;
+    }
+  } else {
+    let num = displayInput.textContent;
+    displayInput.textContent = num.concat(this.textContent);
+  }
   this.classList.add("selected");
-  displayInput.textContent = this.textContent;
-  console.log(this.textContent);
 }
 
 function removeTransition(e) {
