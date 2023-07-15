@@ -34,93 +34,110 @@ for (let i = 0; i < 17; i++) {
       btn.textContent = "Delete";
       btn.id = `btnDelete`;
       btn.setAttribute("data-key", `Delete`);
+      btn.classList.add("delete");
       window.addEventListener("keyup", clear);
       window.removeEventListener("keydown", getKeypress);
       break;
     case "1":
       btn.textContent = "/";
       btn.id = `btnDivide`;
+      btn.classList.add("operator");
       btn.setAttribute("data-key", `NumpadDivide`);
       // window.addEventListener("keydown", divide);
       break;
     case "2":
       btn.textContent = "*";
       btn.id = `btnMultiply`;
+      btn.classList.add("operator");
       btn.setAttribute("data-key", `NumpadMultiply`);
       // window.addEventListener("keydown", multiply);
       break;
     case "3":
       btn.textContent = "-";
       btn.id = `btnSubtract`;
+      btn.classList.add("operator");
       btn.setAttribute("data-key", `NumpadSubtract`);
       // window.addEventListener("keydown", subtract);
       break;
     case "4":
       btn.textContent = "7";
       btn.id = `btn${btn.textContent}`;
+      btn.classList.add("number");
       btn.setAttribute("data-key", `Numpad${btn.textContent}`);
       btn.value = 7;
       break;
     case "5":
       btn.textContent = "8";
       btn.id = `btn${btn.textContent}`;
+      btn.classList.add("number");
       btn.setAttribute("data-key", `Numpad${btn.textContent}`);
       break;
     case "6":
       btn.textContent = "9";
       btn.id = `btn${btn.textContent}`;
+      btn.classList.add("number");
       btn.setAttribute("data-key", `Numpad${btn.textContent}`);
       break;
     case "7":
       btn.textContent = "+";
       btn.id = `btnAdd`;
       btn.setAttribute("data-key", `NumpadAdd`);
+      btn.classList.add("operator");
       // window.addEventListener("keydown", add);
       break;
     case "8":
       btn.textContent = "4";
       btn.id = `btn${btn.textContent}`;
+      btn.classList.add("number");
       btn.setAttribute("data-key", `Numpad${btn.textContent}`);
       break;
     case "9":
       btn.textContent = "5";
       btn.id = `btn${btn.textContent}`;
+      btn.classList.add("number");
       btn.setAttribute("data-key", `Numpad${btn.textContent}`);
       break;
     case "10":
       btn.textContent = "6";
       btn.id = `btn${btn.textContent}`;
+      btn.classList.add("number");
       btn.setAttribute("data-key", `Numpad${btn.textContent}`);
       break;
     case "11":
       btn.textContent = "=";
       btn.id = `btnEqual`;
       btn.setAttribute("data-key", `NumpadEnter`);
+      btn.classList.add("operator");
       // window.addEventListener("keydown", equal);
       break;
     case "12":
       btn.textContent = "1";
       btn.id = `btn${btn.textContent}`;
+      btn.classList.add("number");
       btn.setAttribute("data-key", `Numpad${btn.textContent}`);
       break;
     case "13":
       btn.textContent = "2";
       btn.id = `btn${btn.textContent}`;
+      btn.classList.add("number");
       btn.setAttribute("data-key", `Numpad${btn.textContent}`);
       break;
     case "14":
       btn.textContent = "3";
       btn.id = `btn${btn.textContent}`;
+      btn.classList.add("number");
       btn.setAttribute("data-key", `Numpad${btn.textContent}`);
       break;
     case "15":
       btn.textContent = "0";
       btn.id = `btn${btn.textContent}`;
+      btn.classList.add("number");
       btn.setAttribute("data-key", `Numpad${btn.textContent}`);
       break;
     case "16":
       btn.textContent = ".";
       btn.id = `btnDecimal`;
+      btn.classList.add("number");
       btn.setAttribute("data-key", `NumpadDecimal`);
       break;
 
@@ -154,7 +171,14 @@ function subtract(array) {
   console.log(array, typeof array[0]);
 }
 function add(array) {
-  console.log(array, typeof array[0]);
+  let sum = 0;
+  for (let i = 0; i < array.length; i++) {
+    console.log(array, typeof array[i]);
+    sum += array[i];
+    displayInput.textContent = sum;
+    console.log(sum, typeof sum);
+  }
+  return sum;
 }
 function calculate(e) {
   console.log(e.textContent);
@@ -199,8 +223,7 @@ function getKeypress(e) {
         displayOutput.textContent = `${e.code.slice(6)}`;
         a = displayInput.textContent;
         array.push(+a);
-        displayInput.textContent = "0";
-        add(array);
+        displayInput.textContent = add(array);
         break;
       case "Enter":
         displayOutput.textContent = `${e.code.slice(6)}`;
@@ -257,8 +280,7 @@ function getClick() {
         displayOutput.textContent = `${key.slice(6)}`;
         a = displayInput.textContent;
         array.push(+a);
-        displayInput.textContent = "0";
-        add(array);
+        displayInput.textContent = add(array);
         break;
       case "Enter":
         displayOutput.textContent = `${key.slice(6)}`;
