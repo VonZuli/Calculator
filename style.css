@@ -17,7 +17,7 @@ body {
   align-content: center;
   margin: 0 auto;
   /* min-width: 500px; */
-  max-width: 500px;
+  max-width: 575px;
   min-height: 10vh;
   border: 5px solid black;
   grid-template-columns: 1fr;
@@ -38,6 +38,7 @@ body {
   margin: 2px;
   transition: all 0.1s ease;
   outline: none;
+  border-radius: 10px;
 }
 .calcBtn:hover {
   background-color: #27eccb;
@@ -51,7 +52,7 @@ body {
   align-items: flex-end;
   justify-content: space-around;
   flex-direction: column;
-  margin: 10px;
+  margin: 20px 10px;
   padding: 10px;
   word-wrap: break-word;
   word-break: break-all;

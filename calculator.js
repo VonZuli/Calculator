@@ -37,8 +37,8 @@ class Calculator {
 
   calculate() {
     let computate;
-    const prev = +this.previousOperand;
-    const curr = +this.currentOperand;
+    const prev = parseFloat(this.previousOperand);
+    const curr = parseFloat(this.currentOperand);
     if (isNaN(prev) || isNaN(curr)) return;
     switch (this.operation) {
       case "+":
@@ -59,7 +59,8 @@ class Calculator {
       default:
         return;
     }
-    this.currentOperand = computate;
+
+    this.currentOperand = Math.abs(computate.toPrecision(15));
     this.operation = undefined;
     this.previousOperand = "";
   }
@@ -334,30 +335,35 @@ const calculator = new Calculator(prevOperandTxtEl, currOperandTxtEl);
 
 numberKey.forEach((button) => {
   button.addEventListener("click", () => {
+    button.classList.add("selected");
     calculator.appendNum(button.textContent);
     calculator.updateDisplay();
   });
 });
 operandKey.forEach((button) => {
   button.addEventListener("click", () => {
+    button.classList.add("selected");
     calculator.chooseOperation(button.textContent);
     calculator.updateDisplay();
   });
 });
 equalKey.forEach((button) => {
   button.addEventListener("click", () => {
+    button.classList.add("selected");
     calculator.calculate(button.textContent);
     calculator.updateDisplay();
   });
 });
 clearKey.forEach((button) => {
   button.addEventListener("click", () => {
+    button.classList.add("selected");
     calculator.clearAll();
     calculator.updateDisplay();
   });
 });
 backKey.forEach((button) => {
   button.addEventListener("click", () => {
+    button.classList.add("selected");
     calculator.delete();
     calculator.updateDisplay();
   });
