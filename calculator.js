@@ -10,10 +10,7 @@ class Calculator {
   clearAll() {
     this.currentOperand = "";
     this.previousOperand = "";
-    test.textContent = "";
-    setTimeout(() => {
-      test.textContent = "TEST";
-    }, 1500);
+
     this.operation = undefined;
   }
 
@@ -25,7 +22,6 @@ class Calculator {
     if (number === "." && this.currentOperand.includes(".")) return;
     this.currentOperand =
       this.currentOperand.toString(number) + number.toString();
-    test.textContent = number;
   }
   chooseOperation(operation) {
     if (this.currentOperand === "") return;
@@ -53,6 +49,14 @@ class Calculator {
         computate = prev * curr;
         break;
       case "/":
+        if (prev === 0 && curr === 0) {
+          const modal = document.querySelector(".modal");
+          modal.style.display = "block";
+          setTimeout(() => {
+            modal.style.display = "none";
+          }, 3000);
+          break;
+        }
         computate = prev / curr;
         break;
       case "=":
@@ -62,7 +66,8 @@ class Calculator {
         return;
     }
 
-    this.currentOperand = Math.abs(computate.toPrecision(15));
+    // this.currentOperand = Math.abs(computate.toPrecision(15));
+    this.currentOperand = computate;
     this.operation = undefined;
     this.previousOperand = "";
   }
@@ -106,70 +111,6 @@ class Calculator {
 //add animations to the buttons
 //add accessibility sound feedback
 
-function clear(e) {
-  const key = document.querySelector(`.calcBtn[data-key="${e.code}"]`);
-  if (!key) return;
-  if (e.key === "Delete" || e.key === "Backspace") {
-    previousOperand.textContent = `${e.key}`;
-    setTimeout(() => {
-      previousOperand.textContent = "";
-    }, 1500);
-  } else {
-    return;
-  }
-}
-// function divide() {}
-// function multiply() {}
-// function subtract() {}
-// function add() {}
-// function calculate() {}
-// function backspace() {}
-// window.addEventListener("keydown", getKeypress);
-function getKeypress(e) {
-  const key = document.querySelector(`.calcBtn[data-key="${e.code}"]`);
-  // let a;
-  if (!key) return;
-  if (e.key === `Delete`) {
-    currentOperand.textContent = "";
-  } else if (currentOperand.textContent === "" && e.key === Number) {
-    currentOperand.textContent = `${e.key}`;
-  } else if (isNaN(e.key)) {
-    switch (e.key) {
-      case ".":
-        break;
-      case "/":
-        previousOperand.textContent = `${e.code.slice(6)}`;
-        // divide();
-        break;
-      case "*":
-        previousOperand.textContent = `${e.code.slice(6)}`;
-        // multiply();
-        break;
-      case "-":
-        previousOperand.textContent = `${e.code.slice(6)}`;
-        // subtract();
-        break;
-      case "+":
-        previousOperand.textContent = `${e.code.slice(6)}`;
-        break;
-      case "Enter":
-        previousOperand.textContent = `${e.code.slice(6)}`;
-        // calculate();
-        break;
-      case "Backspace":
-        previousOperand.textContent = `${e.code}`;
-        // backspace();
-        break;
-      default:
-        break;
-    }
-  } else {
-    let num = currentOperand.textContent;
-    currentOperand.textContent = num.concat(e.key);
-  }
-  key.classList.add("selected");
-  return `${e.key}`;
-}
 //#region
 const numberKey = document.querySelectorAll(`[data-number]`);
 const operandKey = document.querySelectorAll(`[data-operation]`);
@@ -183,12 +124,49 @@ const currOperandTxtEl = document.querySelector(
   `[data-operand=${currentOperand.id}]`
 );
 
-// console.log(numberKey);
-// console.log(operandKey);
-// console.log(equalKey);
-// console.log(backKey);
-// console.log(clearKey);
 const calculator = new Calculator(prevOperandTxtEl, currOperandTxtEl);
+window.addEventListener("keyup", handleKeypress);
+
+function handleKeypress(e) {
+  const key = document.querySelector(`.calcBtn[data-key="${e.code}"]`);
+  key.classList.add("selected");
+  if (!key) return;
+  switch (e.key) {
+    case "+":
+      calculator.chooseOperation(key.textContent);
+      calculator.updateDisplay();
+      break;
+    case "-":
+      calculator.chooseOperation(key.textContent);
+      calculator.updateDisplay();
+      break;
+    case "*":
+      calculator.chooseOperation(key.textContent);
+      calculator.updateDisplay();
+      break;
+    case "/":
+      calculator.chooseOperation(key.textContent);
+      calculator.updateDisplay();
+      break;
+    case "Enter":
+      calculator.calculate(key.textContent);
+      calculator.updateDisplay();
+      break;
+    case "Backspace":
+      calculator.delete();
+      calculator.updateDisplay();
+      break;
+    case "Delete":
+      calculator.clearAll();
+      calculator.updateDisplay();
+      break;
+
+    default:
+      calculator.appendNum(key.textContent);
+      calculator.updateDisplay();
+      break;
+  }
+}
 
 numberKey.forEach((button) => {
   button.addEventListener("click", () => {
@@ -196,11 +174,9 @@ numberKey.forEach((button) => {
     calculator.appendNum(button.textContent);
     calculator.updateDisplay();
   });
-  button.addEventListener("keydown", (e) => {
-    const key = document.querySelector(`.calcBtn[data-key="${e.code}"]`);
-    button.classList.add("selected");
-    calculator.appendNum(key.textContent);
-    calculator.updateDisplay();
+  button.addEventListener("keyup", (e) => {
+    e.preventDefault();
+    handleKeypress(e.key);
   });
 });
 operandKey.forEach((button) => {
@@ -209,12 +185,20 @@ operandKey.forEach((button) => {
     calculator.chooseOperation(button.textContent);
     calculator.updateDisplay();
   });
+  button.addEventListener("keyup", (e) => {
+    e.preventDefault();
+    handleKeypress(e.key);
+  });
 });
 equalKey.forEach((button) => {
   button.addEventListener("click", () => {
     button.classList.add("selected");
     calculator.calculate(button.textContent);
     calculator.updateDisplay();
+  });
+  button.addEventListener("keyup", (e) => {
+    e.preventDefault();
+    handleKeypress(e.key);
   });
 });
 clearKey.forEach((button) => {
@@ -223,6 +207,10 @@ clearKey.forEach((button) => {
     calculator.clearAll();
     calculator.updateDisplay();
   });
+  button.addEventListener("keyup", (e) => {
+    e.preventDefault();
+    handleKeypress();
+  });
 });
 backKey.forEach((button) => {
   button.addEventListener("click", () => {
@@ -230,8 +218,13 @@ backKey.forEach((button) => {
     calculator.delete();
     calculator.updateDisplay();
   });
+  button.addEventListener("keyup", (e) => {
+    e.preventDefault();
+    handleKeypress();
+  });
 });
 //#endregion
+
 //remove animation on buttons
 function removeTransition(e) {
   if (e.propertyName !== "transform") return;

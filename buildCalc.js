@@ -6,7 +6,9 @@ export function buildCalc() {
   const previousOperand = document.createElement("div");
   const currentOperand = document.createElement("div");
   const keypad = document.createElement("div");
-  const test = document.createElement("div");
+  const modal = document.createElement("div");
+  const modalContent = document.createElement("div");
+  const modalText = document.createElement("p");
 
   display.id = "display";
   currentOperand.id = "currentOperand";
@@ -18,26 +20,19 @@ export function buildCalc() {
   previousOperand.setAttribute("data-operand", "previousOperand");
 
   keypad.id = "keypad";
-  test.id = "test";
-  test.style.border = "10px solid blue";
-  test.style.font = "bold 50px Arial";
-  test.style.color = "Blue";
-  test.style.height = "50px";
-  test.style.margin = "50px auto";
-  test.style.padding = "50px";
-  test.style.width = "50%";
-  test.style.display = "flex";
-  test.style.justifyContent = "center";
-  test.style.alignItems = "center";
-  test.textContent = "TEST";
 
   container.appendChild(display);
   display.appendChild(previousOperand);
   display.appendChild(currentOperand);
   container.appendChild(keypad);
-  body.appendChild(test);
 
-  // const calculator = new Calculator(previousOperand, currentOperand);
+  modal.setAttribute("class", "modal");
+  modalContent.setAttribute("class", "modal-content");
+  modalText.textContent =
+    "Are you trying to open a tear in the fabric of space and time?";
+  modal.appendChild(modalContent);
+  modalContent.appendChild(modalText);
+  body.appendChild(modal);
 
   for (let i = 0; i < 18; i++) {
     const btn = document.createElement("button");
