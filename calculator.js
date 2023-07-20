@@ -127,9 +127,16 @@ const currOperandTxtEl = document.querySelector(
 const calculator = new Calculator(prevOperandTxtEl, currOperandTxtEl);
 window.addEventListener("keyup", handleKeypress);
 
+function playAudio() {
+  const audio = document.querySelector(`#audio`);
+  if (!audio) return;
+  audio.currentTime = 0;
+  audio.play();
+}
 function handleKeypress(e) {
   const key = document.querySelector(`.calcBtn[data-key="${e.code}"]`);
   key.classList.add("selected");
+  playAudio();
   if (!key) return;
   switch (e.key) {
     case "+":
@@ -170,6 +177,7 @@ function handleKeypress(e) {
 
 numberKey.forEach((button) => {
   button.addEventListener("click", () => {
+    playAudio();
     button.classList.add("selected");
     calculator.appendNum(button.textContent);
     calculator.updateDisplay();
@@ -181,6 +189,7 @@ numberKey.forEach((button) => {
 });
 operandKey.forEach((button) => {
   button.addEventListener("click", () => {
+    playAudio();
     button.classList.add("selected");
     calculator.chooseOperation(button.textContent);
     calculator.updateDisplay();
@@ -192,6 +201,7 @@ operandKey.forEach((button) => {
 });
 equalKey.forEach((button) => {
   button.addEventListener("click", () => {
+    playAudio();
     button.classList.add("selected");
     calculator.calculate(button.textContent);
     calculator.updateDisplay();
@@ -203,6 +213,7 @@ equalKey.forEach((button) => {
 });
 clearKey.forEach((button) => {
   button.addEventListener("click", () => {
+    playAudio();
     button.classList.add("selected");
     calculator.clearAll();
     calculator.updateDisplay();
@@ -228,6 +239,7 @@ backKey.forEach((button) => {
 //remove animation on buttons
 function removeTransition(e) {
   if (e.propertyName !== "transform") return;
+
   this.classList.remove("selected");
 }
 
