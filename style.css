@@ -3,7 +3,6 @@
 *::after {
   box-sizing: border-box;
   background-color: #f5a819;
-  /* background-color: black; */
   font-family: "Roboto Mono", monospace;
 }
 body {
@@ -16,7 +15,7 @@ body {
   justify-content: center;
   align-content: center;
   margin: 0 auto;
-  /* min-width: 500px; */
+
   max-width: 575px;
   min-height: 10vh;
   border: 5px solid black;
@@ -108,17 +107,25 @@ body {
   overflow: auto;
   background-color: #27eccb;
   background-color: #354d49cc;
-  /* animation: grow 2s; */
-  /* border-radius: 50%; */
 }
 .modal-content {
+  display: flex;
+  margin: 15% auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
   background-color: #27eccb;
   background-color: #354d4900;
 }
+.modal-content img {
+  border: 10px solid #27eccb;
+  max-width: 200px;
+  max-height: 200px;
+}
 .modal-content p {
-  background-color: #000;
+  background-color: #00000099;
   color: #27eccb;
-  margin: 15% auto;
   padding: 20px;
   border: 10px solid #27eccb;
   width: fit-content;
@@ -198,80 +205,3 @@ body {
   grid-area: Clear;
 }
 /*#endregion Grid-Area*/
-/**
-  * Gyro
-  *
-  * @author jh3y - https://github.com/jh3y
-*/
-/**
-  * Cyclical
-  *
-  * @author jh3y - jheytompkins.com
-*/
-@-webkit-keyframes grow {
-  0%,
-  100% {
-    -webkit-transform: translate(-50%, -50%) scale(1);
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    -webkit-transform: translate(-50%, -50%) scale(0);
-    transform: translate(-50%, -50%) scale(0);
-  }
-}
-@keyframes grow {
-  0%,
-  100% {
-    -webkit-transform: translate(-50%, -50%) scale(1);
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    -webkit-transform: translate(-50%, -50%) scale(0);
-    transform: translate(-50%, -50%) scale(0);
-  }
-}
-
-.cyclical {
-  -webkit-animation: spin 2s infinite linear;
-  animation: spin 2s infinite linear;
-  height: 50px;
-  position: relative;
-  width: 50px;
-}
-.cyclical:after,
-.cyclical:before {
-  -webkit-animation: grow 1.25s infinite ease;
-  animation: grow 1.25s infinite ease;
-  background: var(--primary);
-  border-radius: 100%;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  content: "";
-}
-.cyclical:after {
-  height: 50%;
-  width: 50%;
-  -webkit-transform-origin: 40% 80%;
-  transform-origin: 40% 80%;
-}
-.cyclical:before {
-  height: 75%;
-  width: 75%;
-  -webkit-transform-origin: -40% -80%;
-  transform-origin: -40% -80%;
-}
-
-@-webkit-keyframes spin {
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes spin {
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}

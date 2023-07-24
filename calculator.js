@@ -62,10 +62,10 @@ class Calculator {
           setTimeout(() => {
             modal.style.display = "none";
             if (modal.style.display === "none") {
+              modalText.textContent = "";
               clear.click();
             }
           }, 5000);
-
           break;
         }
         computate = prev / curr;

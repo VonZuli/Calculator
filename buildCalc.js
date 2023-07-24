@@ -9,6 +9,7 @@ export function buildCalc() {
   const modal = document.createElement("div");
   const modalContent = document.createElement("div");
   const modalText = document.createElement("p");
+  const modalImg = document.createElement("img");
 
   display.id = "display";
   currentOperand.id = "currentOperand";
@@ -28,7 +29,10 @@ export function buildCalc() {
 
   modal.setAttribute("class", "modal");
   modalContent.setAttribute("class", "modal-content");
+  modalImg.setAttribute("src", "images/calculonQuote.webp");
+  modalImg.setAttribute("alt", "Calculon");
   modal.appendChild(modalContent);
+  modalContent.appendChild(modalImg);
   modalContent.appendChild(modalText);
   body.appendChild(modal);
 
