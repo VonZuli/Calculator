@@ -111,6 +111,10 @@ body {
   /* animation: grow 2s; */
   /* border-radius: 50%; */
 }
+.modal-content {
+  background-color: #27eccb;
+  background-color: #354d4900;
+}
 .modal-content p {
   background-color: #000;
   color: #27eccb;

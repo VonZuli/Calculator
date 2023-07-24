@@ -28,8 +28,6 @@ export function buildCalc() {
 
   modal.setAttribute("class", "modal");
   modalContent.setAttribute("class", "modal-content");
-  modalText.textContent =
-    "Are you trying to open a tear in the fabric of space and time?";
   modal.appendChild(modalContent);
   modalContent.appendChild(modalText);
   body.appendChild(modal);

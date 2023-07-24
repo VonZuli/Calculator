@@ -1,5 +1,6 @@
 "use strict";
 import { buildCalc } from "./buildCalc.js";
+
 buildCalc();
 class Calculator {
   constructor(prevOperandTxtEl, currOperandTxtEl) {
@@ -20,6 +21,9 @@ class Calculator {
 
   appendNum(number) {
     if (number === "." && this.currentOperand.includes(".")) return;
+    if (this.currentOperand.length >= 15) {
+      return;
+    }
     this.currentOperand =
       this.currentOperand.toString(number) + number.toString();
   }
@@ -51,10 +55,17 @@ class Calculator {
       case "/":
         if (prev === 0 && curr === 0) {
           const modal = document.querySelector(".modal");
+          const modalText = document.querySelector(".modal p");
+          const clear = document.getElementById("btnClear");
+          modalText.textContent = this.getQuote();
           modal.style.display = "block";
           setTimeout(() => {
             modal.style.display = "none";
-          }, 3000);
+            if (modal.style.display === "none") {
+              clear.click();
+            }
+          }, 5000);
+
           break;
         }
         computate = prev / curr;
@@ -66,14 +77,11 @@ class Calculator {
         return;
     }
 
-    // this.currentOperand = Math.abs(computate.toPrecision(15));
     this.currentOperand = computate;
     this.operation = undefined;
     this.previousOperand = "";
   }
   getDisplayNum(num) {
-    // let strNum = num + "";
-    // strNum += "";
     const strNum = num.toString();
     const intNum = parseFloat(strNum.split(".")[0]);
     const decimal = strNum.split(".")[1];
@@ -88,9 +96,6 @@ class Calculator {
     } else {
       return intDisplay;
     }
-    // const floatNum = +num;
-    // if (isNaN(floatNum)) return "";
-    // return floatNum.toLocaleString("en");
   }
   updateDisplay() {
     this.currOperandTxtEl.textContent = this.getDisplayNum(this.currentOperand);
@@ -102,14 +107,19 @@ class Calculator {
       this.prevOperandTxtEl.textContent = "";
     }
   }
+  getQuote() {
+    let quote1 =
+      "Calculon: Oh, how cruel and melodramatic fate is. [shouting] Why?";
+    let quote2 = "Calculon: N000000000!";
+    let quote3 =
+      "Calculon: [thinking] I'd like to thank the Academy, my agent and most of all, my operating system, Windows Vista, for everything it-- [crashes] [mechanic voice] System error.";
+    let quote4 =
+      "Calculon: I'm unfamiliar with the... type of thing I'm seeing.";
+    let quoteArray = [quote1, quote2, quote3, quote4];
+    const randomQuote = Math.floor(Math.random() * quoteArray.length);
+    return quoteArray[randomQuote];
+  }
 }
-//16 buttons to program
-//functions to multiply, add, subtract, divide get total
-
-//future considerations
-//add scientific functions
-//add animations to the buttons
-//add accessibility sound feedback
 
 //#region
 const numberKey = document.querySelectorAll(`[data-number]`);
@@ -236,7 +246,6 @@ backKey.forEach((button) => {
 });
 //#endregion
 
-//remove animation on buttons
 function removeTransition(e) {
   if (e.propertyName !== "transform") return;
 
